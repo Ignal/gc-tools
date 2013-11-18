@@ -1,4 +1,4 @@
 gc-tools
 ========
 
-geocaching helper programs(C) and bsh scripts 
+geocaching helper programs(C) and bash scripts 
