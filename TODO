@@ -1,0 +1,12 @@
+Was wird noch gebraucht?
+
+1.1. Tool zum Auflisten der Inhalte der von Hand erzeugten wpt-Files (gpx)
+     - schon da: eval-waypoints.sh
+1.2. Abgleich mit bekannten Finalkoordinaten
+     - extra-Option -m <Mystery-Liste>
+     - Ausgabe <GC-Code>#Breite#Laenge
+
+
+
+2. Tool zum Ersetzen der Pseudo- durch Finalkoordinaten
+
