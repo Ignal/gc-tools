@@ -1,5 +1,5 @@
-BUILDDIRS = bstw qs bf ook
-SUBDIRS = scripts bstw qs bf ook
+BUILDDIRS = bww qs bf ook
+SUBDIRS = scripts bww qs bf ook
 
 .PHONY all depend clean:
 	for i in $(BUILDDIRS); do make -C $$i $@; done
