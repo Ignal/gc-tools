@@ -1,4 +1,4 @@
-TARGET=bstw
+TARGET=bww
 OBJ=$(TARGET:%=%.o)
 SRC=$(OBJ:%.o=%.c)
 DEPEND=.depend
