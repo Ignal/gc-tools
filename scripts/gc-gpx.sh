@@ -251,7 +251,7 @@ function restore_commas() {
 
 BEGIN {
     # maskieren von Nutzkommas
-    magic="2a7749bb360duzt57c223b3cbf56ai00ad1"
+    magic=SUBSEP
 
     FS="#"
     CONVFMT="%.13g"
