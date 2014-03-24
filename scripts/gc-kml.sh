@@ -22,35 +22,35 @@ cat << EOF
   <Style id="yellow">
     <IconStyle>
       <Icon>
-        <href>http://maps.gstatic.com/intl/de_de/mapfiles/ms/micons/yellow-dot.png</href>
+        <href>http://maps.google.com/mapfiles/kml/paddle/ylw-blank.png</href>
       </Icon>
     </IconStyle>
   </Style>
   <Style id="red">
     <IconStyle>
       <Icon>
-        <href>http://maps.gstatic.com/intl/de_de/mapfiles/ms/micons/red-dot.png</href>
+        <href>http://maps.google.com/mapfiles/kml/paddle/red-blank.png</href>
       </Icon>
     </IconStyle>
   </Style>
   <Style id="green">
     <IconStyle>
       <Icon>
-        <href>http://maps.gstatic.com/intl/de_de/mapfiles/ms/micons/green-dot.png</href>
+        <href>http://maps.google.com/mapfiles/kml/paddle/grn-blank.png</href>
       </Icon>
     </IconStyle>
   </Style>
   <Style id="blue">
     <IconStyle>
       <Icon>
-        <href>http://maps.gstatic.com/intl/de_de/mapfiles/ms/micons/blue-dot.png</href>
+        <href>http://maps.google.com/mapfiles/kml/paddle/blu-blank.png</href>
       </Icon>
     </IconStyle>
   </Style>
   <Style id="violet">
     <IconStyle>
       <Icon>
-        <href>http://maps.gstatic.com/intl/de_de/mapfiles/ms/micons/purple-dot.png</href>
+        <href>http://maps.google.com/mapfiles/kml/paddle/purple-blank.png</href>
       </Icon>
     </IconStyle>
   </Style>
