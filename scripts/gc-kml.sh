@@ -7,6 +7,7 @@ usage() {
     echo "    -a: zeige auch archivierte an (rot)" >&2
     echo "    -s: zeige auch Stages an (violett)" >&2
     echo "    -o: zeige auch eigene an (blau)" >&2
+    echo "    -w: zeige auch beliebige Wegpunkte an (weiss)" >&2
     echo "    -r <region>: werte Caches aus Region <region> aus" >&2
     echo "                 kann mehrfach vorkommen. Wenn keine Region" >&2
     echo "                 vorgegeben wird, werden alle Caches ausgegeben." >&2
@@ -54,6 +55,13 @@ cat << EOF
       </Icon>
     </IconStyle>
   </Style>
+  <Style id="white">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.google.com/mapfiles/kml/paddle/wht-blank.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
 EOF
 }
 
@@ -79,6 +87,8 @@ while [ $# -gt 0 ]; do
         AWK_OPT="$AWK_OPT -v s=1"
     elif [ $1 = "-o" ]; then
         AWK_OPT="$AWK_OPT -v o=1"
+    elif [ $1 = "-w" ]; then
+        AWK_OPT="$AWK_OPT -v w=1"
     elif [ $1 = "-c" ]; then
         shift
         if [ $# -eq 0 ]; then
@@ -159,6 +169,12 @@ function add_stage (symbol, code, name, size, lon, lat, hint)
     fill_mark(symbol, code SUBSEP n_stages[code], name, size, lon, lat, hint)
 }
 
+function add_waypoint (symbol, name, lon, lat, hint)
+{
+    ++n_waypoints
+    fill_mark(symbol, wpt_code SUBSEP n_waypoints, name, "none", lon, lat, hint)
+}
+
 function print_mark (code)
 {
     split(code, bare_code, SUBSEP)
@@ -205,6 +221,7 @@ function init_symbols () {
     symbol_name["f"] = "green"
     symbol_name["o"] = "blue"
     symbol_name["s"] = "violet"
+    symbol_name["w"] = "white"
 
     valid_symbol["yellow"] = 1
 
@@ -222,6 +239,10 @@ function init_symbols () {
 
     if (s == 1) {
         valid_symbol["violet"] = 1
+    }
+
+    if (w == 1) {
+        valid_symbol["white"] = 1
     }
 }
 
@@ -288,6 +309,7 @@ function restore_commas() {
 BEGIN {
     # maskieren von Nutzkommas
     magic=SUBSEP
+    wpt_code="WPT" SUBSEP "00"
 
     FS="#"
     CONVFMT="%.13g"
@@ -296,6 +318,7 @@ BEGIN {
     init_symbols()
 
     n_marks = 0
+    n_waypoints = 0
     exit_code = 0
 }
 
@@ -321,6 +344,8 @@ NR > 2 {
     } else if (selected) {
         if (field[9] == "s") {
             add_stage(symbol_name[field[9]], field[1], field[2], field[3], field[5], field[4], field[6])
+        } else if (field[9] == "w") {
+            add_waypoint(symbol_name[field[9]], field[2], field[5], field[4], field[6])
         } else {
             add_mark(symbol_name[field[9]], field[1], field[2], field[3], field[5], field[4], field[6])
         }
@@ -344,6 +369,11 @@ END {
                     }
                 }
             }
+        }
+    }
+    for (i = 1; i <= n_waypoints; ++i) {
+        if (gc_symbol[wpt_code SUBSEP i] in valid_symbol) {
+            print_mark(wpt_code SUBSEP i)
         }
     }
 }'
