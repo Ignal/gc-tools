@@ -122,11 +122,16 @@ function add_stage (symbol, code, name, size, lon, lat, hint)
     fill_mark(symbol, code SUBSEP n_stages[code], name, size, lon, lat, hint)
 }
 
+function add_waypoint (symbol, name, lon, lat, hint)
+{
+    ++n_waypoints
+    fill_mark(symbol, wpt_code SUBSEP n_waypoints, name, "none", lon, lat, hint)
+}
+
 function print_waypoint (code)
 {
     split(code, bare_code, SUBSEP)
     print "    <wpt lat=\"" decval(gc_lat[code]) "\" lon=\"" decval(gc_lon[code]) "\">"
-    print "        <time>0.000</time>"
     print "        <time>" t "</time>"
     print "        <name>" bare_code[1] " - " gc_name[code] "</name>"
     print "        <url>http://coord.info/" bare_code[1] "</url>"
