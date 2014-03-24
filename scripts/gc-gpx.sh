@@ -6,6 +6,7 @@ usage() {
     echo "    -a: zeige auch archivierte an (rot)" >&2
     echo "    -s: zeige auch Stages an (violett)" >&2
     echo "    -o: zeige auch eigene an (blau)" >&2
+    echo "    -w: zeige auch beliebige Wegpunkte an (weiss)" >&2
     echo "    -r <region>: werte Caches aus Region <region> aus" >&2
     echo "                 kann mehrfach vorkommen. Wenn keine Region" >&2
     echo "                 vorgegeben wird, werden alle Caches ausgegeben." >&2
@@ -45,6 +46,8 @@ while [ $# -gt 0 ]; do
         AWK_OPT="$AWK_OPT -v s=1"
     elif [ $1 = "-o" ]; then
         AWK_OPT="$AWK_OPT -v o=1"
+    elif [ $1 = "-w" ]; then
+        AWK_OPT="$AWK_OPT -v w=1"
     elif [ $1 = "-r" ]; then
         shift
         if [ $# -eq 0 ]; then
@@ -174,6 +177,7 @@ function init_symbols () {
     symbol_name["f"] = "Navaid, Green"
     symbol_name["o"] = "Navaid, Blue"
     symbol_name["s"] = "Navaid, Violet"
+    symbol_name["w"] = "Navaid, White"
 
     valid_symbol["Navaid, Amber"] = 1
 
@@ -191,6 +195,10 @@ function init_symbols () {
 
     if (s == 1) {
         valid_symbol["Navaid, Violet"] = 1
+    }
+
+    if (w == 1) {
+        valid_symbol["Navaid, White"] = 1
     }
 }
 
@@ -257,6 +265,7 @@ function restore_commas() {
 BEGIN {
     # maskieren von Nutzkommas
     magic=SUBSEP
+    wpt_code="WPT" SUBSEP "00"
 
     FS="#"
     CONVFMT="%.13g"
@@ -265,6 +274,7 @@ BEGIN {
     init_symbols()
 
     n_marks = 0
+    n_waypoints = 0
     exit_code = 0
 }
 
@@ -290,6 +300,8 @@ NR > 2 {
     } else if (selected) {
         if (field[9] == "s") {
             add_stage(symbol_name[field[9]], field[1], field[2], field[3], field[5], field[4], field[6])
+        } else if (field[9] == "w") {
+            add_waypoint(symbol_name[field[9]], field[2], field[5], field[4], field[6])
         } else {
             add_mark(symbol_name[field[9]], field[1], field[2], field[3], field[5], field[4], field[6])
         }
@@ -313,6 +325,11 @@ END {
                     }
                 }
             }
+        }
+    }
+    for (i = 1; i <= n_waypoints; ++i) {
+        if (gc_symbol[wpt_code SUBSEP i] in valid_symbol) {
+            print_waypoint(wpt_code SUBSEP i)
         }
     }
 }'
