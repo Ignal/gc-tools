@@ -48,7 +48,7 @@ function decvalues (val)
     deg = int(val)
     rest = 60.0 * (val - deg)
     min = int(rest)
-    sec = int(6000.0 * (rest - min) + 0.5)
+    sec = int(60.0 * (rest - min) + 0.5)
 print     deg "/1 " min "/1 " sec "/100"
     return deg "/1 " min "/1 " sec "/100"
 }
