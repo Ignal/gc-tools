@@ -21,6 +21,6 @@ install:
 	cp -i $(TARGET) /usr/local/bin
 
 uninstall:
-	rm -f /usr/local/bin/$(TARGE)
+	rm -f /usr/local/bin/$(TARGET)
 
 -include $(DEPEND)
