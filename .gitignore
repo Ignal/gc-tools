@@ -1,4 +1,5 @@
 *.o
+/python3/__pycache__
 /bww/bww
 /qs/qs
 /ook/ook
