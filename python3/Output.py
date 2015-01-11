@@ -83,6 +83,53 @@ class ListOutput(Output):
         pass
 
 
+## TextOutput ################################################
+class TextOutput(Output):
+    def __init__(self):
+        Output.__init__(self)
+
+    def _printHead(self):
+        pass
+
+    def _printWaypoints(self, waypoints):
+        waypoints.print(self)
+
+    def printMark(self, waypoint):
+        if waypoint.isEmpty():
+            return False
+        else:
+            self._printMark(waypoint)
+            return True
+
+    def __printLine(self, key, value):
+        key = key + ":"
+        print("{:<12s}  {:s}".format(key, value))
+
+    def _printMark(self, waypoint):
+        self.__printLine("GC code", waypoint.getGcCode())
+        self.__printLine("name", waypoint.getName())
+        self.__printLine("type", waypoint.describeWaypointType())
+        self.__printLine("size", waypoint.getSize())
+        position = waypoint.getLatitudeAsString() + "  " + waypoint.getLongitudeAsString()
+        self.__printLine("position", position)
+        self.__printLine("location", waypoint.getLocation())
+        self.__printLine("hint", waypoint.getHint())
+        print("")
+
+    def printStage(self, stage):
+        if stage.isEmpty():
+            return False
+        else:
+            self._printStage(stage)
+            return True
+
+    def _printStage(self, stage):
+        self._printMark(stage)
+
+    def _printFoot(self):
+        pass
+
+
 ## GpxOutput #################################################
 class GpxOutput(Output):
     def __init__(self, caption):

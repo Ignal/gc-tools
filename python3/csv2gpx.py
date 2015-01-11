@@ -26,7 +26,7 @@ class Config:
         if progname == None:
            progname = "xxx.py"
 
-        print(progname, " [-c <caption>] [-G|-K|-L] [-f] [-a] [-s] [-o] [-w] [-r <region 1>] [-r <region 2>] ...", file=sys.stderr)
+        print(progname, " [-c <caption>] [-G|-K|-L|-T] [-f] [-a] [-s] [-o] [-w] [-r <region 1>] [-r <region 2>] ...", file=sys.stderr)
         print("    -c <caption>: title of output file", file=sys.stderr)
         print("    -f: also list found caches (green)", file=sys.stderr)
         print("    -a: also list archived caches (red)", file=sys.stderr)
@@ -38,6 +38,7 @@ class Config:
         print("                 is selected all caches will be listed.", file=sys.stderr)
         print("    -G: GPX output[default]", file=sys.stderr)
         print("    -K: KML output", file=sys.stderr)
+        print("    -T: text output", file=sys.stderr)
         print("    -L: simple list", file=sys.stderr)
 
     def printOwn(self):
@@ -67,7 +68,7 @@ class Config:
     def parseCommandLine(self, argv):
         try:
             self.__progname = argv[0]
-            opts, args = getopt.getopt(argv[1:], "GKLac:for:sw")
+            opts, args = getopt.getopt(argv[1:], "GKLTac:for:sw")
         except getopt.GetoptError as err:
             print (str(err), file=sys.stderr)
             self.usage()
@@ -103,6 +104,11 @@ class Config:
                     self.usage()
                     sys.exit(1)
                 self.__output = ListOutput()
+            elif opt == "-T":
+                if self.__output != None:
+                    self.usage()
+                    sys.exit(1)
+                self.__output = TextOutput()
             else:
                 usage()
                 sys.exit(1)
