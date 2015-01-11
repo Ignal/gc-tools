@@ -67,7 +67,7 @@ class ListOutput(Output):
 
     def _printMark(self, waypoint):
         code = waypoint.getGcCode() + ":"
-        print("{:<8s}  {:<45s} {:s}".format(code, waypoint.getName(), waypoint.getWaypointType()))
+        print("{:<8s}  {:<45s} {:s}".format(code, waypoint.getName(), waypoint.describeWaypointType()))
 
     def printStage(self, stage):
         if stage.isEmpty():

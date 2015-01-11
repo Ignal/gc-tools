@@ -167,6 +167,10 @@ class Waypoint:
     def getAdvice(self):
         return self.__advice
 
+    def describeWaypointType(self):
+        s = str(self.__waypoint_type)
+        return s[s.index(".") + 1:].replace("_", " ")
+
     def getWaypointType(self):
         return self.__waypoint_type
 
