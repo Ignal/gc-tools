@@ -19,6 +19,28 @@ class Waypoint:
     __map_is_initialized = False
     __waypoint_type_map = {}
 
+    def getLatitudeAsString(self):
+        value = self.__latitude
+        if value >= 0:
+            cardinal_dir = "N"
+        else:
+            cardinal_dir = "S"
+            value = -value
+        deg = int(value)
+        rest = (value - deg) * 60
+        return "{0:s} {1:02d}° {2:06.3f}'".format(cardinal_dir, deg, rest)
+
+    def getLongitudeAsString(self):
+        value = self.__longitude
+        if value >= 0:
+            cardinal_dir = "E"
+        else:
+            cardinal_dir = "W"
+            value = -value
+        deg = int(value)
+        rest = (value - deg) * 60
+        return "{0:s} {1:03d}° {2:06.3f}'".format(cardinal_dir, deg, rest)
+
     @staticmethod
     def decval(value):
         sign = 1
