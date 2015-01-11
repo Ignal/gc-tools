@@ -77,8 +77,7 @@ class ListOutput(Output):
             return True
 
     def _printStage(self, stage):
-        code = stage.getGcCode() + ":"
-        print("    {:<8s}  {:<45s}".format(code, stage.getName()))
+        self._printMark(stage)
 
     def _printFoot(self):
         pass
