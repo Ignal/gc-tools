@@ -120,7 +120,7 @@ class Config:
 
 ## Parser ####################################################
 class Parser:
-    def __init__(self, regions):
+    def __init__(self, config):
         self.config = config
 
     def __setBinaryMode(self):
@@ -161,7 +161,7 @@ class Parser:
 config = Config()
 config.parseCommandLine(sys.argv)
 
-parser = Parser(config.getRegions())
+parser = Parser(config)
 waypoints = parser.read()
 
 output = config.getOutput()
