@@ -46,6 +46,9 @@ class Output:
     def _printFoot(self):
         pass
 
+    def setCaption(self, caption):
+        pass
+
 
 ## ListOutput ################################################
 class ListOutput(Output):
@@ -132,9 +135,8 @@ class TextOutput(Output):
 
 ## GpxOutput #################################################
 class GpxOutput(Output):
-    def __init__(self, caption):
+    def __init__(self):
         self._symbol = {}
-        self._caption = caption
         Output.__init__(self)
 
     def _initSymbols(self):
@@ -189,6 +191,9 @@ class GpxOutput(Output):
             self._printStage(stage)
             return True
 
+    def setCaption(self, caption):
+        self._caption = caption
+
     def _printStage(self, stage):
         self._printMark(stage)
 
@@ -198,10 +203,9 @@ class GpxOutput(Output):
 
 ## KmlOutput #################################################
 class KmlOutput(Output):
-    def __init__(self, caption):
+    def __init__(self):
         self._symbol = {}
         self._url = {}
-        self.caption = caption
         Output.__init__(self)
 
     def _initSymbols(self):
@@ -238,7 +242,7 @@ class KmlOutput(Output):
         print("""<?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2">
   <Document>
-  <name>""" + self.caption + "</name>")
+  <name>""" + self._caption + "</name>")
         self._printHeaderSection(WaypointType.to_be_found)
         self._printHeaderSection(WaypointType.archived)
         self._printHeaderSection(WaypointType.found)
@@ -275,6 +279,9 @@ class KmlOutput(Output):
         else:
             self._printStage(stage)
             return True
+
+    def setCaption(self, caption):
+        self._caption = caption
 
     def _printStage(self, stage):
         self._printMark(stage)

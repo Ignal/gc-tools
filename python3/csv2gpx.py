@@ -93,12 +93,12 @@ class Config:
                 if self.__output != None:
                     self.usage()
                     sys.exit(1)
-                self.__output = GpxOutput(self.getCaption())
+                self.__output = GpxOutput()
             elif opt == "-K":
                 if self.__output != None:
                     self.usage()
                     sys.exit(1)
-                self.__output = KmlOutput(self.getCaption())
+                self.__output = KmlOutput()
             elif opt == "-L":
                 if self.__output != None:
                     self.usage()
@@ -113,7 +113,8 @@ class Config:
                 usage()
                 sys.exit(1)
         if self.__output == None:
-            self.__output = GpxOutput(self.getCaption())
+            self.__output = GpxOutput()
+        self.__output.setCaption(self.getCaption())
         self.__args__ = args
 
 
