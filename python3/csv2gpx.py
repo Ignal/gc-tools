@@ -145,6 +145,9 @@ class Parser:
         waypoints = Waypoints()
 
         for row in reader:
+            if (not row):
+                continue
+
             if (not row[0]):
                 continue
 
