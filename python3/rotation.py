@@ -16,14 +16,17 @@ class Rotation:
         self.__extendMap(string.ascii_lowercase)
         self.__extendMap(self.digits)
 
-    def __rotateCharacter(self, char, offset):
+    def __rotateCharacter(self, char, offset, decrypt):
         position, source = self.__char_map[char]
-        new_position = (position + offset) % len(source)
+        source_length = len(source)
+        if decrypt:
+            offset = source_length - offset
+        new_position = (position + offset) % source_length
         return source[new_position]
 
-    def __transformCharacter(self, char, offset):
+    def __transformCharacter(self, char, offset, decrypt):
         if char in self.__char_map:
-            return self.__rotateCharacter(char, offset)
+            return self.__rotateCharacter(char, offset, decrypt)
         return char
 
     def isDigit(self, char):
@@ -32,13 +35,13 @@ class Rotation:
     def isChar(self, char):
         return char in string.ascii_lowercase or char in string.ascii_uppercase
 
-    def rotate(self, text, char_offset, digit_offset = 0):
+    def rotate(self, text, char_offset, digit_offset = 0, decrypt = False):
         result = ""
         for char in text:
             offset = char_offset
             if self.isDigit(char):
                 offset = digit_offset
-            result += self.__transformCharacter(char, offset)
+            result += self.__transformCharacter(char, offset, decrypt)
         return result
 
 
@@ -48,18 +51,13 @@ class Rotation:
                 position, source = self.__char_map[char]
                 yield position
 
-    def vigenereTransform(self, text, key):
+    def vigenereTransform(self, text, key, decrypt = False):
         result = ""
         offset_generator = self.__keyOffsets(key)
         for char in text:
             new_char = char
             if self.isChar(char):
                 offset = next(offset_generator)
-                new_char = self.__transformCharacter(char, offset)
+                new_char = self.__transformCharacter(char, offset, decrypt)
             result += new_char
         return result
-
-rot = Rotation()
-
-print(rot.rotate("Cent 6438", 13, 5))
-print(rot.vigenereTransform("Cent 6438", "NNNN"))
