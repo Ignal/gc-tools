@@ -4,8 +4,6 @@ import sys
 import string
 
 class Rotation:
-    digits = "0123456789"
-
     def __extendMap(self, letters):
         for position, ch in enumerate(letters):
             self.__char_map[ch] = (position, letters)
@@ -14,7 +12,7 @@ class Rotation:
         self.__char_map = {}
         self.__extendMap(string.ascii_uppercase)
         self.__extendMap(string.ascii_lowercase)
-        self.__extendMap(self.digits)
+        self.__extendMap(string.digits)
 
     def __rotateCharacter(self, char, offset, decrypt):
         position, source = self.__char_map[char]
